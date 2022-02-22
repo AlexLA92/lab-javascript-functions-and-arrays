@@ -1,41 +1,108 @@
 // Iteration #1: Find the maximum
-function maxOfTwoNumbers() {}
+function maxOfTwoNumbers(a,b) {
+  if (a>=b){
+    return a
+  }
+  else {
+    return b
+  }
+}
 
 
 
 // Iteration #2: Find longest word
-const words = ['mystery', 'brother', 'aviator', 'crocodile', 'pearl', 'orchard', 'crackpot'];
+const words = ['mystery', 'brotherssssssss', 'aviator', 'crocodile', 'pearl', 'orchard', 'crackpot'];
 
-function findLongestWord() {}
-
-
+function findLongestWord(words) {
+  longestWord = ''
+  if (words.length === 0){
+    return null
+  }
+  for (let i = 0; i< words.length; i++){
+    if (words[i].length > longestWord.length ){
+      longestWord = words[i]
+    }
+  }
+  return longestWord
+}
 
 // Iteration #3: Calculate the sum
 const numbers = [6, 12, 1, 18, 13, 16, 2, 1, 8, 10];
 
-function sumNumbers() {}
-
+function sumNumbers(numbers) {
+  totalSum = 0
+  numbers.forEach(function(item) {
+    totalSum += item
+  })
+  return totalSum
+}
 
 
 // Iteration #3.1 Bonus:
-function sum() {}
+function checkValidTypes(checkArr){
+  typeArr = checkArr.map(function(item){
+    return typeof(item)
+  })
+  if (typeArr.indexOf("object") === -1){
+    return true
+  }
+  else{
+    return false
+  }
+}
 
+
+function mapToNumbers(mixedArr){
+  numbersArray = mixedArr.map(function(item){
+    switch (typeof(item)){
+      case "number":
+        return item
+      case "string":
+        return item.length
+      case "boolean":
+        return Number(item)
+    }
+  })
+  return numbersArray
+}
+
+function sum(mixedArr) {
+  if (!checkValidTypes(mixedArr)){
+    throw new Error("Unsupported data type sir or ma'am")
+  }
+  numbersArray = mapToNumbers(mixedArr)
+  return sumNumbers(numbersArray)
+}
 
 
 // Iteration #4: Calculate the average
 // Level 1: Array of numbers
 const numbersAvg = [2, 6, 9, 10, 7, 4, 1, 9];
 
-function averageNumbers() {}
+function averageNumbers(numbersArr) {
+  if (numbersArr.length===0){
+    return null
+  }
+  result = sum(numbersArr)/numbersArr.length
+  return Math.round(result*100)/100
+}
 
 
 // Level 2: Array of strings
-const wordsArr = ['seat', 'correspond', 'linen', 'motif', 'hole', 'smell', 'smart', 'chaos', 'fuel', 'palace'];
+const wordsArr = ['Ironhack', 'Madrid', 'Barcelona', 'Paris', 'Miami', 'Mexico', 'Berlin', 'Programmers']
 
-function averageWordLength() { }
+function averageWordLength(wordsArr) { 
+  lengthArr = wordsArr.map(function(item){
+    return item.length
+  })
+  return averageNumbers(lengthArr)
+}
 
 // Bonus - Iteration #4.1
-function avg() {}
+function avg(mixedArr) {
+  numbersArr = mapToNumbers(mixedArr)
+  return averageNumbers(numbersArr)
+}
 
 // Iteration #5: Unique arrays
 const wordsUnique = [
@@ -52,15 +119,31 @@ const wordsUnique = [
   'bring'
 ];
 
-function uniquifyArray() {}
-
+function uniquifyArray(wordsDuplicate) {
+  wordsSolo = []
+  wordsDuplicate.forEach(function(item){
+    if(wordsSolo.indexOf(item) === -1){
+      wordsSolo.push(item)
+    }
+  })
+  return (wordsSolo.length > 0)? wordsSolo : null
+}
 
 
 // Iteration #6: Find elements
 const wordsFind = ['machine', 'subset', 'trouble', 'starting', 'matter', 'eating', 'truth', 'disobedience'];
 
-function doesWordExist() {}
-
+function doesWordExist(wordsArr,wordTarget) {
+  if (wordsArr.length === 0){
+    return null
+  }
+  for (let i = 0 ; i< wordsArr.length; i++){
+    if (wordsArr[i] === wordTarget ){
+      return true
+    }
+  }
+  return false
+}
 
 
 // Iteration #7: Count repetition
@@ -78,7 +161,15 @@ const wordsCount = [
   'matter'
 ];
 
-function howManyTimes() {}
+function howManyTimes(wordsArr,wordTarget) {
+  wordCount = 0
+  for (let i = 0 ; i< wordsArr.length; i++){
+    if (wordsArr[i] === wordTarget ){
+      wordCount++
+    }
+  }
+  return wordCount
+}
 
 
 
@@ -106,10 +197,33 @@ const matrix = [
   [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
 ];
 
-function greatestProduct() {}
-
-
-
+function greatestProduct(matrix) {
+  numAdj = 4
+  highestProduct = 0
+  nbCols = matrix[0].length
+  nbRows = matrix.length
+  for (let col = 0 ; col < nbCols ; col++){
+    for (let row = 0 ; row < nbRows; row++){
+      productCol = matrix[row][col]
+      productRow = matrix[row][col]
+      for (let j = 1 ; j <= numAdj-1; j++ ){
+        // Cover adjacent columns
+        productCol *= matrix[row][col+j]
+        // Cover adjacent rows
+        if (row+j < nbRows){
+          productRow *= matrix[row+j][col]
+        }
+      }
+      if (productCol > highestProduct){
+        highestProduct = productCol
+      }
+      if (productRow > highestProduct){
+        highestProduct = productRow
+      }
+    }
+  }
+  return highestProduct
+}
 
 // The following is required to make unit tests work.
 /* Environment setup. Do not modify the below code. */
